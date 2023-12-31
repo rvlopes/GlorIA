@@ -1,0 +1,55 @@
+{
+    "ModelName":"mariaalBERTina",
+    "Configs": {
+            "BertConfig": {
+                "task": "MLM",
+                "dataset":"ptwikiclean",
+                "tokenizerType":"WordPiece",
+                "vocabSize": 30522,
+                "enableTruncation":"True",
+                "maxLength":512,
+                "preprocess":"True",
+                "specTokens":["[UNK]", "[CLS]", "[SEP]", "[PAD]", "[MASK]"]
+            },
+           "GPT2": {
+               "task": "CLM",
+                "dataset":"ptwikicleanv2",
+                "tokenizerType":"BPE",
+                "vocabSize": 50257,
+                "enableTruncation":"True",
+                "maxLength":512,
+                "preprocess":"True",
+                "specTokens":["<|EOF|>"]
+            },
+           "GPT2-256": {
+               "task": "CLM",
+                "dataset":"ptwikicleanv2",
+                "tokenizerType":"BPE",
+                "vocabSize": 50257,
+                "enableTruncation":"True",
+                "maxLength":256,
+                "preprocess":"True",
+                "specTokens":["<|EOF|>"]
+           },
+           "GPT2-1024": {
+               "task": "CLM",
+                "dataset":"ptwikicleanv2",
+                "tokenizerType":"BPE",
+                "vocabSize": 50257,
+                "enableTruncation":"True",
+                "maxLength":1024,
+                "preprocess":"True",
+                "specTokens":["<|EOF|>"]
+           },
+           "GPT2-512": {
+               "task": "CLM",
+                "dataset":"ptwikicleanv2",
+                "tokenizerType":"BPE",
+                "vocabSize": 50257,
+                "enableTruncation":"True",
+                "maxLength":512,
+                "preprocess":"True",
+                "specTokens":["<|EOF|>"]
+           }
+    }
+}
