@@ -188,4 +188,5 @@ For any question or doubt I will try to answer as soon as I can. Feel free to us
 
 
 ## Acknowledgements
-My adviser, Prof.David Semedo, the Nova Vision & Language Research Group, VisionBox Project, and NOVA Lincs.
+We would like to thank Arquivo.pt's team for their content preservation efforts, and for all the help and guidance in accessing the archived web pages at scale.
+This work has been partially funded by the FCT project NOVA LINCS Ref. UIDP/04516/2020, by CMU|Portugal project iFetch (CMUP LISBOA-01-0247-FEDER-045920).
