@@ -4,10 +4,12 @@
 
 ### This is the code used to perform pre-training, finetuning, and preliminary testing for the GlórIA models. 
 
-### If you simply want to use the models, I recommend you to visit them on HuggingFace (to be made public).
+**If you simply want to use the models, I recommend you to visit them on HuggingFace (to be made public)**
 - [GlórIA 1.3B](https://huggingface.co/rvlopes/glorIA-1.3B)
 - [GlórIA 2.7B](https://huggingface.co/rvlopes/glorIA-2.7B)
 
+
+**License**: GlórIA's usage is restricted to research-only purposes, following the [CC BY-NC 4.0 Deed license](https://creativecommons.org/licenses/by-nc/4.0/deed.en).
 
 # Introduction
 The code in this repository supports pre-training a *GPT-like* (GPT2 and GPTNeo) using either a multi-sourced dataset/corpora, or a single text dataset.
