@@ -9,7 +9,7 @@
 - [GlórIA 2.7B](https://huggingface.co/rvlopes/glorIA-2.7B)
 
 
-**License**: GlórIA's usage is restricted to research-only purposes, following the [CC BY-NC 4.0 Deed license](https://creativecommons.org/licenses/by-nc/4.0/deed.en).
+**License**: GlórIA's usage is restricted to research-only purposes, subject to the ClueWeb22 Dataset license, which can be freely obtained [here](https://www.lemurproject.org/clueweb22/obtain.php).
 
 # Introduction
 The code in this repository supports pre-training a *GPT-like* (GPT2 and GPTNeo) using either a multi-sourced dataset/corpora, or a single text dataset.
@@ -112,13 +112,13 @@ You will also find examples of slurm scripts that were used during development i
 ### Resuming Training
 The resume mechanic works and has been tested for pre-training - it was not implemented for finetuning. 
 
-Using it may seem...unorthodox. When resuming, you want to run the pre-train script with **almost exactly** the same arguments, adding the *-resume* flag and the *-checkpoint [checkpoint]* you wish to resume pre-training from. Due to the nature of our mainly used schedulers you NEED to know the total training steps you will perform in TOTAL (except for linear schedulers) - and during the development of my thesis, part of research was to figure out "how much pre-training"/how many steps would we want, and due to resources, ideally we would pre-train for X steps, and the resume for X+Y steps to see if the model's performance increased.
+Using it may seem unorthodox. When resuming, you want to run the pre-train script with **almost exactly** the same arguments, adding the *-resume* flag and the *-checkpoint [checkpoint]* you wish to resume pre-training from. Due to the nature of our mostly used schedulers, you NEED to know the total training steps you will perform in TOTAL (except for linear schedulers) - and during the development of my thesis, part of research was to figure out "how much pre-training"/how many steps would we want - and due to resources, ideally, we would pre-train for X steps, and the resume for X+Y steps to see if the model's performance increased.
 
 **In pratice**, to take this need into account, when launching a pre-train for the first time **with the intention of resuming it in the future, you need to specify the maximum number of steps.** This corresponds to the total number of steps. Then, using checkpoint saving, you can stop training and resume at any time with the previous flags. When, resuming training, the training arguments will stay EXACTLY the same with the added flags.
 
 A "gimmick" you can perform to endlessly pre-train your model if you so require is to either:
 1) Use a constant learning scheduler. Does not require the total training steps.
-2) Or use a cosine annealing scheduler with hard restarts every few steps. E.g: You can pre-train for 1M steps, and perform a hard restart every 500k (-hrr 2). Then, you would **relaunch pre-training with the resume flags, but by changing the *total_train_steps* stored in the *resume_vars***.
+2) Or use a cosine annealing scheduler with hard restarts every few steps. E.g: You can pre-train for 1M steps, and perform a hard restart every 500k (-hrr) 2). Then, you would **relaunch pre-training with the resume flags, but by changing the *total_train_steps* stored in the *resume_vars*** (requiring actual code change ☹️ )
 
 For example, we pre-trained our model for 1M steps with 2 hard restarts. This means it performs a hard restart every 500k steps. But now we want to continue its pre-training, **mantaining the states of the scheduler, optimizer, etc**. If we're using **4 GPUs** and want to train for 1M steps, each GPU will perform 1M steps (since the batch is distributed) - so we have 4 x 1M = 4M total training steps. This is the value that will be stored in the *resume_vars*, so if we wanted to pre-train our model up to 2M steps, this value would have to be changed to 4 * 2M = 8M total training steps - and to ensure we perform hard restarts every 500k, we'd have to change the *-hrr* flag to 4 instead of 2, due to scheduler creation and state loading nuances (it will be created with the new values, but its state will be loading through Accelerate, and everything will go on as intended).
 ```python
@@ -132,9 +132,9 @@ if resume_vars is not None:
     start_epoch = resume_vars['epoch']  
     max_steps = total_train_steps // gpu_count
 ```
-**Author's Notes:** I'm aware this won't quite work for 'epoch-based pre-training' unless you know the exact number of steps, and that it is completely non-optimal, but implementing this behavior was part a part of my TODO list that I wasn't able to put my hands on. **I will attempt to correct this even if I'm no longer mantaining the code**.
+**Author's Notes:** I'm aware this won't quite work for 'epoch-based pre-training' unless you know the exact number of steps, and that it is completely non-optimal, but implementing this behaviour was part a part of my TODO list that I wasn't able to put my hands on.
 
-Resuming is only implemented for previous checkpoints that were pre-trained using this code - not TESTED/supported for finetuning cases as I didn't require stopping and resuming for benchmark training and evaluation.
+Resuming is only implemented for previous checkpoints that were pre-trained using this code - not TESTED/supported for finetuning cases as I didn't require stopping and resuming for benchmark training and evaluation. Even though it should work, some nuances related to directories may affect this.
 
 #### Update December:
 Uploaded (untested) fix for the previous resume issue. Now you should be able to resume a 1M pre-trained model by specifying, for example, 2M max steps when launching pre-training.
@@ -179,7 +179,7 @@ Some details:
 ## Dependencies
 Please check the **environment.yml** file that contains the list of packages and their versions, which can then be used to create and import the Conda environment to a new machine.
 
-## TODO List [Abandoned and Incomplete ATM]:
+## TODO List [Unmaintained and Incomplete ATM]:
 - Change names on some misleading arguments, such as "fp16" which also supports "bf16";
 - Refactor code to multiple trainers, one for each goal: pre-training, ASSIN finetune, GLUE finetune, etc;
 - Implement out-of-the-box tokenizer loading for pre-training instead of using my own (currently commented in the code!);
@@ -187,8 +187,8 @@ Please check the **environment.yml** file that contains the list of packages and
 
 ## Contacts
 For any question or doubt I will try to answer as soon as I can. Feel free to use the following email: rv.lopes[at]campus.fct.unl.pt
+If the previous email does not work, please use: ri cardo val verde 2000[a](g)mail.com
 
 
 ## Acknowledgements
-We would like to thank Arquivo.pt's team for their content preservation efforts, and for all the help and guidance in accessing the archived web pages at scale.
-This work has been partially funded by the FCT project NOVA LINCS Ref. UIDP/04516/2020, by CMU|Portugal project iFetch (CMUP LISBOA-01-0247-FEDER-045920).
+We would like to thank Arquivo.pt's team for their content preservation efforts, and for all the help and guidance in accessing the archived web pages at scale. This work was partially funded by the FCT project NOVA LINCS Ref. UIDP/04516/2020, by CMU|Portugal project iFetch, Ref. CMUP LISBOA-01-0247-FEDER-045920, and by the FCT project Ref. Nº CPCA-IAC/AV/594875/2023.
