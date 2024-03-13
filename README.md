@@ -24,11 +24,11 @@ If you find our work usefull, please cite our paper:
 
 
 ## Introduction
-The code in this repository implements pre-training of GlórIA using either a multi-sourced dataset/corpora, or a single text dataset. It also contains the code to finetune such a model for the following tasks/benchmarks: ASSIN-2, GLUE-PTPT and SquadPT. The code in this repository was ran and tested on a cluster using Slurm and several NVIDIA A100s (PCIe).
+The code in this repository implements pre-training of GlórIA using either a multi-sourced dataset/corpora, or a single text dataset. It also contains the code to evaluate on [CALAME](https://huggingface.co/datasets/NOVA-vision-language/calame-pt), and to finetune such a model for the following tasks/benchmarks: ASSIN-2, GLUE-PTPT and SquadPT. Training, evaluation and data pre-processing were conducted on a cluster using Slurm and several NVIDIA A100s (PCIe).
 
 
 ## Training Data
-**GlorIA 1.3B** was trained on a large corpora, with aproximately 35B billion tokens. This corpora was built by gathering multiple Portuguese sources:
+**GlorIA 1.3B** was trained on a large corpora, with approximately 35B billion tokens. This corpora was built by gathering multiple Portuguese sources:
 - [ArquivoPT News PT-PT Dataset](): A collection of 1.4M European Portuguese archived news and periodicals from [Arquivo.pt](https://arquivo.pt/).
 - [ClueWeb-Large PT-PT](https://lemurproject.org/clueweb22.php/): Multilingual Corpus, similar to OSCAR. Again, metadata was used to filter only PT-PT webpages.
 - [Europarl PT-PT](https://www.statmt.org/europarl/): A parallel corpus with documents such as transcripts from the European Parliament (we only used the PT-PT documents).
@@ -47,7 +47,7 @@ python -m torch.distributed.launch --nproc_per_node 4 --master_port $master_port
 --use_env run-pretrain.py -b 128 -lr 1e-4 -ml 512 -ga 16 -e 1 -wd 0.01 -ws 10000 -ms 2000000 -ls 100 -ss 250000 \
 -fp16 bf16 -hrr 4 -deepspeed -t gptuga-tk-512 -m GPTNEO-1.3B -wandb gptuganeo-1.3B-2M -scheduler cosine_hard
 ```
-The **nproc_per_node** is a torch.distributed param, but it is important here, since it represents the number of DISTRIBUTED PROCESSES that will be launched - **this value corresponds usually to the number of GPUs you are using**. You can view the detailed arguments for pre-training further below.
+The **nproc_per_node** is a torch.distributed param, but it is important here since it represents the number of DISTRIBUTED PROCESSES that will be launched - **this value corresponds usually to the number of GPUs you are using**. You can view the detailed arguments for pre-training further below.
 
 The *-t* flag is used to load our own produced tokenizer (gptuga-tk-512), and *-m* indicates the base model we want to use - which was GPTNeo-1.3B initially.
 
@@ -116,7 +116,7 @@ You will also find examples of slurm scripts that were used during development i
 ### Misc
 - The Trainer was built as "steps oriented", meaning it was programmed with the concept of total steps in mind instead of epochs, due to the incredibly large amounts of text we had (35M documents or 35B tokens!), so measuring training in "epochs" was not very helpful. **When possible, launch pre-training with a given number of max steps for simplicity**;
 - Specifying max steps WILL override *number of epochs* and run training until it reaches the specified number;
-- Specifying save steps WILL override *save on epoch* behavior and will save a checkpoint every X steps;
+- Specifying save steps WILL override *save on epoch* behaviour and will save a checkpoint every X steps;
 - The Trainer uses a custom multidataset object to leverage multiple sources and arbitrary weights, but internally supports "regular" datasets as long as they can be used in a PyTorch Dataloader;
 
 
