@@ -5,27 +5,39 @@
 
  **Model Resources**:
 
-- **[Paper]** You can check our [paper](https://arxiv.org/abs/2402.12969), accepted in PROPOR 2024.
+- **[Paper]** You can check our [paper](https://aclanthology.org/2024.propor-1.45/), accepted in PROPOR 2024.
 - **[Pre-trained Model]** The pre-trained model is available in HuggingFace: [GlórIA 1.3B](https://huggingface.co/rvlopes/glorIA-1.3B).
-- **[CALAME-PT](https://huggingface.co/datasets/NOVA-vision-language/calame-pt)** A PT language modelling benchmark, used to evaluate GlórIA.
+- **[CALAME-PT]** A PT language modeling benchmark [link](https://huggingface.co/datasets/NOVA-vision-language/calame-pt), used to evaluate GlórIA generative capabilities.
 
 
 If you find our work useful, please cite our paper:
 ```
-@InProceedings{gloria_ptpt_propor2024,
-  author="Lopes, Ricardo
-          and Magalhães, João
-          and Semedo, David",
-  title="GlórIA: A Generative and Open Large Language Model for Portuguese",
-  booktitle="Computational Processing of the Portuguese Language (PROPOR 2024)",
-  year="2024",
+@inproceedings{lopes-etal-2024-gloria,
+    title = "{G}l{\'o}r{IA}: A Generative and Open Large Language Model for {P}ortuguese",
+    author = "Lopes, Ricardo  and
+      Magalhaes, Joao  and
+      Semedo, David",
+    editor = "Gamallo, Pablo  and
+      Claro, Daniela  and
+      Teixeira, Ant{\'o}nio  and
+      Real, Livy  and
+      Garcia, Marcos  and
+      Oliveira, Hugo Gon{\c{c}}alo  and
+      Amaro, Raquel",
+    booktitle = "Proceedings of the 16th International Conference on Computational Processing of Portuguese",
+    month = mar,
+    year = "2024",
+    address = "Santiago de Compostela, Galicia/Spain",
+    publisher = "Association for Computational Lingustics",
+    url = "https://aclanthology.org/2024.propor-1.45",
+    pages = "441--453",
 }
 ```
 
 
 
 ## Introduction
-The code in this repository implements pre-training of GlórIA using either a multi-sourced dataset/corpora, or a single text dataset. It also contains the code to evaluate on [CALAME](https://huggingface.co/datasets/NOVA-vision-language/calame-pt), and to finetune such a model for the following tasks/benchmarks: ASSIN-2, GLUE-PTPT and SquadPT. Training, evaluation and data pre-processing were conducted on a cluster using Slurm and several NVIDIA A100s (PCIe).
+The code in this repository implements pre-training of GlórIA using either a multi-sourced dataset/corpora, or a single text dataset. It also contains the code to evaluate on [CALAME-PT](https://huggingface.co/datasets/NOVA-vision-language/calame-pt), and to finetune such a model for the following tasks/benchmarks: ASSIN-2, GLUE-PTPT and SquadPT. Training, evaluation and data pre-processing were conducted on a cluster using Slurm and several NVIDIA A100s (PCIe).
 
 
 ## Training Data
