@@ -1,15 +1,16 @@
 # GlórIA 1.3B - A Portuguese European-focused Large Language Model
  
- **GlorIA** is a a large generative language model, with special **focus on European Portuguese**.  It is a 1.3B parameters model, based on [GPTNeo](https://huggingface.co/EleutherAI/gpt-neo-1.3B), which has 24 layers and a hidden size of 2048.
+ **GlorIA** is a large generative language model, with a special **focus on European Portuguese**.  It is a 1.3B parameters model, based on [GPTNeo](https://huggingface.co/EleutherAI/gpt-neo-1.3B), which has 24 layers and a hidden size of 2048.
 
 
  **Model Resources**:
 
 - **[Paper]** You can check our [paper](https://arxiv.org/abs/2402.12969), accepted in PROPOR 2024.
 - **[Pre-trained Model]** The pre-trained model is available in HuggingFace: [GlórIA 1.3B](https://huggingface.co/rvlopes/glorIA-1.3B).
+- **[CALAME-PT](https://huggingface.co/datasets/NOVA-vision-language/calame-pt)** A PT language modelling benchmark, used to evaluate GlórIA.
 
 
-If you find our work usefull, please cite our paper:
+If you find our work useful, please cite our paper:
 ```
 @InProceedings{gloria_ptpt_propor2024,
   author="Lopes, Ricardo
