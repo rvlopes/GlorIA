@@ -1,6 +1,6 @@
 # GlórIA 1.3B - A Portuguese European-focused Large Language Model
 
- <center><img src="gloria-logo.png" width="30%"></center>
+<p align="center"><img src="gloria-logo.png" width="30%"></center></p>
  
  **GlorIA** is a large generative language model, with a special **focus on European Portuguese**.  It is a 1.3B parameters model, based on [GPTNeo](https://huggingface.co/EleutherAI/gpt-neo-1.3B), which has 24 layers and a hidden size of 2048.
 
